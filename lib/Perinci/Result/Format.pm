@@ -67,6 +67,8 @@ sub format {
 1;
 # ABSTRACT: Format envelope result
 
+=for Pod::Coverage .*
+
 =head1 SYNOPSIS
 
 
