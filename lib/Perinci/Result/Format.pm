@@ -18,18 +18,25 @@ my $format_text = sub {
             "ERROR $res->[0]: $res->[1]" .
                 ($res->[1] =~ /\n\z/ ? "" : "\n");
     }
-    my $r = $res->[0] == 200 ? $res->[2] : $res;
+    my ($r, $opts);
+    if ($res->[0] == 200) {
+        $r = $res->[2];
+        $opts = $res->[3]{result_format_options} // {};
+    } else {
+        $r = $res;
+        $opts = {};
+    }
     if ($format eq 'text') {
         return Data::Format::Pretty::format_pretty(
-            $r, {module=>'Console'});
+            $r, {%$opts, module=>'Console'});
     }
     if ($format eq 'text-simple') {
         return Data::Format::Pretty::format_pretty(
-            $r, {module=>'SimpleText'});
+            $r, {%$opts, module=>'SimpleText'});
     }
     if ($format eq 'text-pretty') {
         return Data::Format::Pretty::format_pretty(
-            $r, {module=>'Text'});
+            $r, {%$opts, module=>'Text'});
     }
 };
 
