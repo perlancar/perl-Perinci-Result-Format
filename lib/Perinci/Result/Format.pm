@@ -8,6 +8,11 @@ use Scalar::Util qw(reftype);
 
 # VERSION
 
+# decorations include color or other markup, which might make a data structure
+# like JSON or YAML string become invalid JSON/YAML. this should be turned off
+# if one wants to send the formatting over network.
+our $Enable_Decoration = 1;
+
 # text formats are special. since they are more oriented towards human instead
 # of machine, we remove envelope when status is 200, so users only see content.
 
@@ -56,11 +61,15 @@ sub format {
 
     my $formatter = $Formats{$format} or return undef;
 
+    my $deco = $Enable_Decoration;
+
     if ((reftype($formatter->[0]) // '') eq 'CODE') {
         return $formatter->[0]->($format, $res);
     } else {
+        my %o;
+        $o{color} = 0 if !$deco && $format =~ /json|yaml/;
         return Data::Format::Pretty::format_pretty(
-            $res, {module=>$formatter->[0]});
+            $res, {%o, module=>$formatter->[0]});
     }
 }
 
