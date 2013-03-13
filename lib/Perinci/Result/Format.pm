@@ -26,7 +26,9 @@ my $format_text = sub {
     my ($r, $opts);
     if ($res->[0] == 200) {
         $r = $res->[2];
-        $opts = $res->[3]{result_format_options} // {};
+        my $rfo = $res->[3]{result_format_options} // {};
+        # old compat, rfo used to be only opts, now it's {fmt=>opts, ...}
+        if ($rfo->{$format}) { $opts = $rfo->{$format} } else { $opts = $rfo }
     } else {
         $r = $res;
         $opts = {};
@@ -127,6 +129,24 @@ names + MIME type.
 None is currently exported/exportable.
 
 =head1 format($res, $format) => STR
+
+Format enveloped result C<$res> with format named C<$format>.
+
+Result metadata (C<< $res->[3] >>) is also checked for key named
+C<result_format_options>. The value should be a hash like this C<< { FORMAT_NAME
+=> OPTS, ... } >>. This way, function results can specify the details of
+formatting. An example enveloped result:
+
+ [200, "OK", ["foo", "bar", "baz"], {
+     result_format_options => {
+         "text"        => {list_max_columns=>1},
+         "text-pretty" => {list_max_columns=>1},
+     }
+ }]
+
+The above result specifies that if it is displayed using C<text> or
+C<text-pretty> format, it should be displayed in one columns instead of
+multicolumns.
 
 
 =head1 FAQ
