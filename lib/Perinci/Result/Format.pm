@@ -8,10 +8,8 @@ use Scalar::Util qw(reftype);
 
 # VERSION
 
-# decorations include color or other markup, which might make a data structure
-# like JSON or YAML string become invalid JSON/YAML. this should be turned off
-# if one wants to send the formatting over network.
 our $Enable_Decoration = 1;
+our $Enable_Cleansing  = 0;
 
 # text formats are special. since they are more oriented towards human instead
 # of machine, we remove envelope when status is 200, so users only see content.
@@ -48,12 +46,12 @@ my $format_text = sub {
 };
 
 our %Formats = (
-    yaml          => ['YAML', 'text/yaml'],
-    json          => ['CompactJSON', 'application/json'],
-    'json-pretty' => ['JSON', 'application/json'],
-    text          => [$format_text, 'text/plain'],
-    'text-simple' => [$format_text, 'text/plain'],
-    'text-pretty' => [$format_text, 'text/plain'],
+    yaml          => ['YAML', 'text/yaml', {circular=>1}],
+    json          => ['CompactJSON', 'application/json', {circular=>0}],
+    'json-pretty' => ['JSON', 'application/json', {circular=>0}],
+    text          => [$format_text, 'text/plain', {circular=>0}],
+    'text-simple' => [$format_text, 'text/plain', {circular=>0}],
+    'text-pretty' => [$format_text, 'text/plain', {circular=>0}],
 );
 
 sub format {
@@ -61,17 +59,28 @@ sub format {
 
     my ($res, $format) = @_;
 
-    my $formatter = $Formats{$format} or return undef;
+    my $fmtinfo = $Formats{$format} or return undef;
+    my $formatter = $fmtinfo->[0];
+
+    state $cleanser;
+    if ($Enable_Cleansing && !$fmtinfo->[2]{circular}) {
+        # currently we only have one type of cleansing, oriented towards JSON
+        if (!$cleanser) {
+            require Data::Clean::JSON;
+            $cleanser = Data::Clean::JSON->new;
+        }
+        $cleanser->clean_in_place($res);
+    }
 
     my $deco = $Enable_Decoration;
 
-    if ((reftype($formatter->[0]) // '') eq 'CODE') {
-        return $formatter->[0]->($format, $res);
+    if ((reftype($formatter) // '') eq 'CODE') {
+        return $formatter->($format, $res);
     } else {
         my %o;
         $o{color} = 0 if !$deco && $format =~ /json|yaml/;
         return Data::Format::Pretty::format_pretty(
-            $res, {%o, module=>$formatter->[0]});
+            $res, {%o, module=>$formatter});
     }
 }
 
@@ -118,10 +127,22 @@ Using Data::Format::Pretty::YAML.
 
 =head1 VARIABLES
 
-=head1 %Perinci::Result::Format::Formats
+=head1 %Perinci::Result::Format::Formats => HASH
 
 Contains a mapping between format names and Data::Format::Pretty::* module
 names + MIME type.
+
+=head1 $Enable_Decoration => BOOL (default: 1)
+
+Decorations include color or other markup, which might make a data structure
+like JSON or YAML string become invalid JSON/YAML. This should be turned off if
+one wants to send the formatting over network.
+
+=head1 $Enable_Cleansing => BOOL (default: 0)
+
+If enabled, cleansing will be done to data to help make sure that data does not
+contain item that cannot be handled by formatter. for example, JSON format
+cannot handle circular references or complex types other than hash/array.
 
 
 =head1 FUNCTIONS
