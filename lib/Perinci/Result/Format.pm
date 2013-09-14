@@ -17,9 +17,24 @@ our $Enable_Cleansing  = 0;
 my $format_text = sub {
     my ($format, $res) = @_;
     if (!defined($res->[2])) {
-        return $res->[0] =~ /\A(?:200|304)\z/ ? "" :
+        my $out = $res->[0] =~ /\A(?:200|304)\z/ ? "" :
             "ERROR $res->[0]: $res->[1]" .
                 ($res->[1] =~ /\n\z/ ? "" : "\n");
+        my $max = 30;
+        my $i = 0;
+        my $prev = $res;
+        while (1) {
+            if ($i > $max) {
+                $out .= "  Previous error list too deep, stopping here\n";
+                last;
+            }
+            last unless $prev = $prev->[3]{prev};
+            last unless ref($prev) eq 'ARRAY';
+            $out .= "  $prev->[0]: $prev->[1]" .
+                ($prev->[1] =~ /\n\z/ ? "" : "\n");
+            $i++;
+        }
+        return $out;
     }
     my ($r, $opts);
     if ($res->[0] == 200) {
