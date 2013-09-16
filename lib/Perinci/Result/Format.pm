@@ -42,9 +42,18 @@ my $format_text = sub {
                     $args = "(...)";
                 } else {
                     # periutil 0.37+ stores call arguments in [4]
-                    $args = Data::Dump::OneLine::dump1(@{ $c->[4] });
+
+                    # XXX a flag to let user choose which
+
+                    # dump version
+                    #$args = Data::Dump::OneLine::dump1(@{ $c->[4] });
+                    #$args = "($args)" if @{$c->[4]} < 2;
+
+                    # stringify version
+                    $args = Data::Dump::OneLine::dump1(map {"$_"} @{ $c->[4] });
+                    $args = "($args)" if @{$c->[4]} < 2;
                 }
-                $out .= "    $c->[3]${args}called at $c->[1] line $c->[2]\n";
+                $out .= "    $c->[3]${args} called at $c->[1] line $c->[2]\n";
             }
             $stack_trace_printed++;
         }
