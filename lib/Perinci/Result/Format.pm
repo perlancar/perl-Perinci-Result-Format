@@ -50,8 +50,9 @@ my $format_text = sub {
                     #$args = "($args)" if @{$c->[4]} < 2;
 
                     # stringify version
-                    $args = Data::Dump::OneLine::dump1(map {"$_"} @{ $c->[4] });
-                    $args = "($args)" if @{$c->[4]} < 2;
+                    $args = Data::Dump::OneLine::dump1(
+                        map {defined($_) ? "$_":$_} @{ $c->[4] });
+                    $args = "($args)" if @{$c->[4]} == 1;
                 }
                 $out .= "    $c->[3]${args} called at $c->[1] line $c->[2]\n";
             }
