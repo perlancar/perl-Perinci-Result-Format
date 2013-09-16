@@ -16,10 +16,21 @@ our $Enable_Cleansing  = 0;
 
 my $format_text = sub {
     my ($format, $res) = @_;
+
+    my $print_err = sub {
+        my $res = shift;
+        my $out = "ERROR $res->[0]" . ($res->[1] ? ": $res->[1]" : "");
+        $out =~ s/\n+\z//;
+        my $crec; $crec = $res->[3]{logs}[0]
+            if $res->[3] && $res->[3]{logs};
+        if ($crec->{file} && $crec->{line}) {
+            $out .= " (in $crec->{file}:$crec->{line})";
+        }
+        "$out\n";
+    };
+
     if (!defined($res->[2])) {
-        my $out = $res->[0] =~ /\A(?:200|304)\z/ ? "" :
-            "ERROR $res->[0]: $res->[1]" .
-                ($res->[1] =~ /\n\z/ ? "" : "\n");
+        my $out = $res->[0] =~ /\A(?:200|304)\z/ ? "" : $print_err->($res);
         my $max = 30;
         my $i = 0;
         my $prev = $res;
@@ -30,8 +41,7 @@ my $format_text = sub {
             }
             last unless $prev = $prev->[3]{prev};
             last unless ref($prev) eq 'ARRAY';
-            $out .= "  $prev->[0]: $prev->[1]" .
-                ($prev->[1] =~ /\n\z/ ? "" : "\n");
+            $out .= "  " . $print_err->($prev);
             $i++;
         }
         return $out;
