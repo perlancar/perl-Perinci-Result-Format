@@ -17,16 +17,38 @@ our $Enable_Cleansing  = 0;
 my $format_text = sub {
     my ($format, $res) = @_;
 
+    my $stack_trace_printed;
+
     my $print_err = sub {
         my $res = shift;
         my $out = "ERROR $res->[0]" . ($res->[1] ? ": $res->[1]" : "");
         $out =~ s/\n+\z//;
-        my $crec; $crec = $res->[3]{logs}[0]
+        my $clog; $clog = $res->[3]{logs}[0]
             if $res->[3] && $res->[3]{logs};
-        if ($crec->{file} && $crec->{line}) {
-            $out .= " (in $crec->{file}:$crec->{line})";
+        if ($clog->{file} && $clog->{line}) {
+            $out .= " (at $clog->{file} line $clog->{line})";
         }
-        "$out\n";
+        $out .= "\n";
+        if ($clog->{stack_trace} && $INC{"Carp/Always.pm"} &&
+                !$stack_trace_printed) {
+            require Data::Dump::OneLine;
+            my $i;
+            for my $c (@{ $clog->{stack_trace} }) {
+                next unless $i++; # skip first entry
+                my $args;
+                if (!$c->[4]) {
+                    $args = "()";
+                } elsif (!ref($c->[4])) {
+                    $args = "(...)";
+                } else {
+                    # periutil 0.37+ stores call arguments in [4]
+                    $args = Data::Dump::OneLine::dump1(@{ $c->[4] });
+                }
+                $out .= "    $c->[3]${args}called at $c->[1] line $c->[2]\n";
+            }
+            $stack_trace_printed++;
+        }
+        $out;
     };
 
     if (!defined($res->[2])) {
