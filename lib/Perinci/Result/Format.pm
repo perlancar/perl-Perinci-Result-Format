@@ -138,6 +138,8 @@ our %Formats = (
     'text-simple' => [$format_text, 'text/plain', {circular=>0}],
     'text-pretty' => [$format_text, 'text/plain', {circular=>0}],
     'perl'        => ['Perl', 'text/x-perl', {circular=>1}],
+    'php'         => ['PHP', 'application/x-httpd-php', {circular=>0}],
+    'ruby'        => ['RUby', 'application/x-ruby', {circular=>1}],
 );
 
 sub format {
