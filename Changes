@@ -1,5 +1,10 @@
 Revision history for Perinci-Result-Format
 
+0.34     2013-10-05 (SHARYANTO)
+
+         - Add Perl & Ruby formats.
+
+
 0.33     2013-10-03 (SHARYANTO)
 
          - text: Colorize error response.
