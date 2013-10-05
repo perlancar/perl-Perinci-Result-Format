@@ -130,7 +130,8 @@ my $format_text = sub {
 };
 
 our %Formats = (
-    yaml          => ['YAML', 'text/yaml', {circular=>1}],
+    # YAML::Tiny::Color currently does not support circular refs
+    yaml          => ['YAML', 'text/yaml', {circular=>0}],
     json          => ['CompactJSON', 'application/json', {circular=>0}],
     'json-pretty' => ['JSON', 'application/json', {circular=>0}],
     text          => [$format_text, 'text/plain', {circular=>0}],
