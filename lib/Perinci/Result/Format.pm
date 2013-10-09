@@ -260,6 +260,12 @@ multicolumns.
 
 =head1 FAQ
 
+=head2 How to list supported formats?
+
+Simply:
+
+ my @supported_formats = keys %Perinci::Result::Format::Formats;
+
 =head2 How to add support for new formats?
 
 First make sure that Data::Format::Pretty::<FORMAT> module is available for your
