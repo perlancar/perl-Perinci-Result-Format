@@ -155,7 +155,7 @@ sub format {
         # currently we only have one type of cleansing, oriented towards JSON
         if (!$cleanser) {
             require Data::Clean::JSON;
-            $cleanser = Data::Clean::JSON->new;
+            $cleanser = Data::Clean::JSON->get_cleanser;
         }
         $cleanser->clean_in_place($res);
     }
