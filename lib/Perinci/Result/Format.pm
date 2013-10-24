@@ -139,6 +139,7 @@ our %Formats = (
     'text-pretty' => [$format_text, 'text/plain', {circular=>0}],
     'perl'        => ['Perl', 'text/x-perl', {circular=>1}],
     #'php'         => ['PHP', 'application/x-httpd-php', {circular=>0}],
+    'phpserialization' => ['PHPSerialization', 'application/vnd.php.serialized', {circular=>0}],
     'ruby'        => ['Ruby', 'application/x-ruby', {circular=>1}],
 );
 
