@@ -167,7 +167,7 @@ sub format {
         return $formatter->($format, $res);
     } else {
         my %o;
-        $o{color} = 0 if !$deco && $format =~ /json|yaml/;
+        $o{color} = 0 if !$deco && $format =~ /json|yaml|perl/;
         return Data::Format::Pretty::format_pretty(
             $res, {%o, module=>$formatter});
     }
