@@ -259,6 +259,15 @@ C<text-pretty> format, it should be displayed in one columns instead of
 multicolumns.
 
 
+=head1 RESULT METADATA
+
+=over
+
+=item * property: result_format_options => HASH
+
+=back
+
+
 =head1 FAQ
 
 =head2 How to list supported formats?
