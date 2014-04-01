@@ -193,7 +193,11 @@ The default supported formats are:
 
 =item * json
 
-Using Data::Format::Pretty::YAML.
+Using Data::Format::Pretty::CompactJSON.
+
+=item * json-pretty
+
+Using Data::Format::Pretty::JSON.
 
 =item * text-simple
 
@@ -210,6 +214,18 @@ Using Data::Format::Pretty::Console.
 =item * yaml
 
 Using Data::Format::Pretty::YAML.
+
+=item * perl
+
+Using Data::Format::Pretty::Perl.
+
+=item * phpserialization
+
+Using Data::Format::Pretty::PHPSerialization.
+
+=item * ruby
+
+Using Data::Format::Pretty::Ruby.
 
 =back
 
