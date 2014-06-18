@@ -158,7 +158,7 @@ sub format {
             require Data::Clean::JSON;
             $cleanser = Data::Clean::JSON->get_cleanser;
         }
-        $cleanser->clone_and_clean($res);
+        $res = $cleanser->clone_and_clean($res);
     }
 
     my $deco = $Enable_Decoration;
