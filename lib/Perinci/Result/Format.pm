@@ -12,7 +12,7 @@ our $Enable_Decoration = 1;
 our $Enable_Cleansing  = 0;
 
 # text formats are special. since they are more oriented towards human instead
-# of machine, we remove envelope when status is 200, so users only see content.
+# of machine, we remove envelope when status is 2xx, so users only see content.
 
 # XXX color theme?
 
@@ -89,7 +89,7 @@ my $format_text = sub {
     };
 
     if (!defined($res->[2])) {
-        my $out = $res->[0] =~ /\A(?:200|304)\z/ ? "" : $print_err->($res);
+        my $out = $res->[0] =~ /\A(?:2..|304)\z/ ? "" : $print_err->($res);
         my $max = 30;
         my $i = 0;
         my $prev = $res;
@@ -106,7 +106,7 @@ my $format_text = sub {
         return $out;
     }
     my ($r, $opts);
-    if ($res->[0] == 200) {
+    if ($res->[0] =~ /\A2../) {
         $r = $res->[2];
         my $rfo = $res->[3]{result_format_options} // {};
         # old compat, rfo used to be only opts, now it's {fmt=>opts, ...}
