@@ -1,12 +1,11 @@
 package Perinci::Result::Format;
 
+# DATE
+# VERSION
+
 use 5.010001;
 use strict;
 use warnings;
-
-use Scalar::Util qw(reftype);
-
-# VERSION
 
 our $Enable_Decoration = 1;
 our $Enable_Cleansing  = 0;
@@ -163,7 +162,7 @@ sub format {
 
     my $deco = $Enable_Decoration;
 
-    if ((reftype($formatter) // '') eq 'CODE') {
+    if (ref($formatter) eq 'CODE') {
         return $formatter->($format, $res);
     } else {
         my %o;
