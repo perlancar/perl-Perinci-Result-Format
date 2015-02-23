@@ -108,8 +108,11 @@ my $format_text = sub {
     if ($res->[0] =~ /\A2../) {
         $r = $res->[2];
         my $rfo = $res->[3]{result_format_options} // {};
-        # old compat, rfo used to be only opts, now it's {fmt=>opts, ...}
-        if ($rfo->{$format}) { $opts = $rfo->{$format} } else { $opts = $rfo }
+        if ($rfo->{$format}) {
+            $opts = $rfo->{$format};
+        } elsif ($rfo->{any}) {
+            $opts = $rfo->{any};
+        }
     } else {
         $r = $res;
         $opts = {};
