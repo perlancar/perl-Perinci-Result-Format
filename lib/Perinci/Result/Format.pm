@@ -115,8 +115,8 @@ my $format_text = sub {
         }
     } else {
         $r = $res;
-        $opts = {};
     }
+    $opts //= {};
     if ($format eq 'text') {
         return Data::Format::Pretty::format_pretty(
             $r, {%$opts, module=>'Console'});

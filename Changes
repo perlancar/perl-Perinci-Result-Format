@@ -1,5 +1,13 @@
 Revision history for Perinci-Result-Format
 
+0.39     2015-02-24 (PERLANCAR)
+
+         - 'result_format_options' result metadata: read 'any' format as
+           fallback, remove support for old format.
+
+         - [Bugfix] See only content when status is 2xx, not just 200.
+
+
 0.38     2014-06-18 (SHARYANTO)
 
          [BUG FIXES]
