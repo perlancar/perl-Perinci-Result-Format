@@ -39,6 +39,6 @@ is($Perinci::Result::Format::Formats{json}[1],
    'application/json',
    'mime type 1');
 
-# XXX test result metadata: result_format_options
+# XXX test result metadata: format_options
 
 done_testing();
