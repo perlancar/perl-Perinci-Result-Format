@@ -1,5 +1,11 @@
 Revision history for Perinci-Result-Format
 
+0.40    2015-03-10 (PERLANCAR)
+
+	- Change result metadata 'result_format_options' ->
+	  'format_options'.
+
+
 0.39     2015-02-24 (PERLANCAR)
 
          - 'result_format_options' result metadata: read 'any' format as
