@@ -107,7 +107,7 @@ my $format_text = sub {
     my ($r, $opts);
     if ($res->[0] =~ /\A2../) {
         $r = $res->[2];
-        my $rfo = $res->[3]{result_format_options} // {};
+        my $rfo = $res->[3]{format_options} // {};
         if ($rfo->{$format}) {
             $opts = $rfo->{$format};
         } elsif ($rfo->{any}) {
@@ -261,12 +261,12 @@ None is currently exported/exportable.
 Format enveloped result C<$res> with format named C<$format>.
 
 Result metadata (C<< $res->[3] >>) is also checked for key named
-C<result_format_options>. The value should be a hash like this C<< { FORMAT_NAME
-=> OPTS, ... } >>. This way, function results can specify the details of
-formatting. An example enveloped result:
+C<format_options>. The value should be a hash like this C<< { FORMAT_NAME =>
+OPTS, ... } >>. FORMAT_NAME can be C<any> to mean any format. This way, function
+results can specify the details of formatting. An example enveloped result:
 
  [200, "OK", ["foo", "bar", "baz"], {
-     result_format_options => {
+     format_options => {
          "text"        => {list_max_columns=>1},
          "text-pretty" => {list_max_columns=>1},
      }
@@ -281,7 +281,7 @@ multicolumns.
 
 =over
 
-=item * property: result_format_options => HASH
+=item * property: format_options => HASH
 
 =back
 
