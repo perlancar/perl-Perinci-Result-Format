@@ -41,4 +41,6 @@ is($Perinci::Result::Format::Formats{json}[1],
 
 # XXX test result metadata: format_options
 
+# XXX test is_naked
+
 done_testing();

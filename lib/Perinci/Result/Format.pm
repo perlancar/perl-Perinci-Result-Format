@@ -148,7 +148,7 @@ our %Formats = (
 sub format {
     require Data::Format::Pretty;
 
-    my ($res, $format) = @_;
+    my ($res, $format, $is_naked) = @_;
 
     my $fmtinfo = $Formats{$format} or return undef;
     my $formatter = $fmtinfo->[0];
@@ -170,8 +170,9 @@ sub format {
     } else {
         my %o;
         $o{color} = 0 if !$deco && $format =~ /json|yaml|perl/;
+        my $data = $is_naked ? $res->[2] : $res;
         return Data::Format::Pretty::format_pretty(
-            $res, {%o, module=>$formatter});
+            $data, {%o, module=>$formatter});
     }
 }
 
@@ -256,7 +257,7 @@ cannot handle circular references or complex types other than hash/array.
 
 None is currently exported/exportable.
 
-=head1 format($res, $format) => STR
+=head1 format($res, $format[ , $is_naked=0 ]) => STR
 
 Format enveloped result C<$res> with format named C<$format>.
 
