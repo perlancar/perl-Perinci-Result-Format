@@ -1,5 +1,14 @@
 Revision history for Perinci-Result-Format
 
+0.43    2015-10-20 (PERLANCAR)
+
+	- No functional changes.
+
+	- Downgrade prereqs
+	  Data::Format::Pretty::{Perl,PHP,PHPSerialization,Ruby,YAML} from
+	  requires to recommends, to reduce deps.
+
+
 0.42    2015-09-29 (PERLANCAR)
 
 	- Add option is_naked.
