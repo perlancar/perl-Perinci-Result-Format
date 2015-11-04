@@ -1,5 +1,13 @@
 Revision history for Perinci-Result-Format
 
+0.44    2015-11-04 (PERLANCAR)
+
+	- No functional changes.
+
+	- Remove phpserialization test because the dep is now optional
+	  [RT#108424].
+
+
 0.43    2015-10-20 (PERLANCAR)
 
 	- No functional changes.
