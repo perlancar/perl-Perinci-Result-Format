@@ -108,10 +108,13 @@ my $format_text = sub {
     if ($res->[0] =~ /\A2../) {
         $r = $res->[2];
         my $rfo = $res->[3]{format_options} // {};
+        my $tff = $res->[3]{'table.fields'};
         if ($rfo->{$format}) {
             $opts = $rfo->{$format};
         } elsif ($rfo->{any}) {
             $opts = $rfo->{any};
+        } elsif ($tff) {
+            $opts = {table_column_orders=>[$tff]};
         }
     } else {
         $r = $res;
