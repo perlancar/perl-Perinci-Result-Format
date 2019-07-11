@@ -1,9 +1,9 @@
-0.45    2015-11-29 (PERLANCAR)
+0.45    2015-11-29  Released-By: PERLANCAR
 
 	- Observe table.fields result metadata.
 
 
-0.44    2015-11-04 (PERLANCAR)
+0.44    2015-11-04  Released-By: PERLANCAR
 
 	- No functional changes.
 
@@ -11,7 +11,7 @@
 	  [RT#108424].
 
 
-0.43    2015-10-20 (PERLANCAR)
+0.43    2015-10-20  Released-By: PERLANCAR
 
 	- No functional changes.
 
@@ -20,12 +20,12 @@
 	  requires to recommends, to reduce deps.
 
 
-0.42    2015-09-29 (PERLANCAR)
+0.42    2015-09-29  Released-By: PERLANCAR
 
 	- Add option is_naked.
 
 
-0.41    2015-09-03 (PERLANCAR)
+0.41    2015-09-03  Released-By: PERLANCAR
 
 	- No functional changes.
 
@@ -34,13 +34,13 @@
 	  requirement.
 
 
-0.40    2015-03-10 (PERLANCAR)
+0.40    2015-03-10  Released-By: PERLANCAR
 
 	- Change result metadata 'result_format_options' ->
 	  'format_options'.
 
 
-0.39     2015-02-24 (PERLANCAR)
+0.39     2015-02-24  Released-By: PERLANCAR
 
          - 'result_format_options' result metadata: read 'any' format as
            fallback, remove support for old format.
@@ -48,47 +48,47 @@
          - [Bugfix] See only content when status is 2xx, not just 200.
 
 
-0.38     2014-06-18 (SHARYANTO)
+0.38     2014-06-18  Released-By: SHARYANTO
 
          [BUG FIXES]
 
          - Second attempt, coding mistake.
 
 
-0.37     2014-06-18 (SHARYANTO)
+0.37     2014-06-18  Released-By: SHARYANTO
 
          - If $Enable_Cleansing is true, do clone-and-clean instead of
            clean-in-place, to avoid modifying e.g. Rinci metadata cache in a
            long-running server.
 
 
-0.36     2014-02-14 (SHARYANTO)
+0.36     2014-02-14  Released-By: SHARYANTO
 
          - Update for the perl formatter (it adds color by default now, so we
            need to be able to handle/disable it).
 
 
-0.35     2013-10-24 (SHARYANTO)
+0.35     2013-10-24  Released-By: SHARYANTO
 
          - Add format: phpserialization.
 
 
-0.34     2013-10-05 (SHARYANTO)
+0.34     2013-10-05  Released-By: SHARYANTO
 
          - Add formats: perl & ruby.
 
 
-0.33     2013-10-03 (SHARYANTO)
+0.33     2013-10-03  Released-By: SHARYANTO
 
          - text: Colorize error response.
 
 
-0.32     2013-09-16 (SHARYANTO)
+0.32     2013-09-16  Released-By: SHARYANTO
 
          - text: Show previous errors and stack trace.
 
 
-0.31     2013-07-05 (SHARYANTO)
+0.31     2013-07-05  Released-By: SHARYANTO
 
          [ENHANCEMENTS]
 
@@ -98,7 +98,7 @@
            types other than array/hash.
 
 
-0.30     2013-03-01 (SHARYANTO)
+0.30     2013-03-01  Released-By: SHARYANTO
 
          [ENHANCEMENTS]
 
@@ -112,7 +112,7 @@
          - Observe result metadata: result_format_options.
 
 
-0.28     2012-08-10 (SHARYANTO)
+0.28     2012-08-10  Released-By: SHARYANTO
 
          - First release, split to make Perinci dist empty (that dist was a
            growing mixed bag and caused headache in dependencies).
